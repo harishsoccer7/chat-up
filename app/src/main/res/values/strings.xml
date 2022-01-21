@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Meetup</string>
+    <string name="login_link"><a href="www.google.com">Press here to login</a></string>
+</resources>
