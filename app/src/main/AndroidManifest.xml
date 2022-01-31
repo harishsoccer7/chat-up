@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Meetup">
         <activity
+            android:name=".error_activity"
+            android:exported="false" />
+        <activity
+            android:name=".EnterPassword"
+            android:exported="false" />
+        <activity
+            android:name=".GettingDetails"
+            android:exported="false" />
+        <activity
             android:name=".verifyOTP"
             android:exported="false" />
         <activity
