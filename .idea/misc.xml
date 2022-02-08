@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Stuff/Coding/Android/chat-up/app/src/main/res/layout/activity_error.xml" value="0.28958333333333336" />
+        <entry key="..\:/Stuff/Coding/Android/chat-up/app/src/main/res/layout/activity_getting_details.xml" value="0.28958333333333336" />
+        <entry key="..\:/Stuff/Coding/Android/chat-up/app/src/main/res/layout/activity_login.xml" value="0.28958333333333336" />
         <entry key="..\:/Stuff/Coding/Android/chat-up/app/src/main/res/layout/activity_main.xml" value="0.19635416666666666" />
+        <entry key="..\:/Stuff/Coding/Android/chat-up/app/src/main/res/layout/activity_signup.xml" value="0.28958333333333336" />
         <entry key="..\:/android_programs/Meetup/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2" />
         <entry key="..\:/android_programs/Meetup/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2" />
         <entry key="..\:/android_programs/Meetup/app/src/main/res/drawable/logo_foreground.xml" value="0.33" />
@@ -27,5 +31,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="16" project-jdk-type="JavaSDK" />
 </project>
