@@ -3,14 +3,12 @@ package com.example.meetup;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class EnterPassword extends AppCompatActivity {
+public class EnterPasswordLogin extends AppCompatActivity {
     private User user_object;
     private EditText enter_password_widget;
     private Button submit_enter_password,signout_enter_password;
@@ -42,7 +40,7 @@ public class EnterPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_password);
+        setContentView(R.layout.activity_enter_password_login);
         Toast.makeText(getApplicationContext(),"Signed in successfully",Toast.LENGTH_LONG).show();
         //Show hi username
         user_object=(User)getIntent().getSerializableExtra("user_object");
@@ -57,7 +55,7 @@ public class EnterPassword extends AppCompatActivity {
                 String enter_password = enter_password_widget.getText().toString();
                 //if we compare two strings using '==' operator them references will be compared.so that developer used equals() which compares the value of the strings
                 if(enter_password.equals(user_object.password)){
-                    Intent navigate = new Intent(EnterPassword.this,login.class);
+                    Intent navigate = new Intent(EnterPasswordLogin.this, Login.class);
                     navigate.putExtra("user_object",user_object);
                     navigate.putExtra("phone_number",getIntent().getStringExtra("phone_number"));
                     launcher.launch(navigate);

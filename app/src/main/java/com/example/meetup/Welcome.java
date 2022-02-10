@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class Welcome extends AppCompatActivity {
     private Button start;
     private TextView error_widget;
     private FirebaseUser current_user;
@@ -34,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result){
                     if(result.getResultCode() == 123){
                         //Code for refresh an activity
-                        finish();//Step :1 Finish MainActivity
-                        startActivity(getIntent());//Step :2Reload the MainActivity
+                        finish();//Step :1 Finish Welcome
+                        startActivity(getIntent());//Step :2Reload the Welcome
                     }
                     else if(result.getResultCode() == Activity.RESULT_CANCELED){
-                        //finish the MainActivity.java.This is useful when we press the back button
+                        //finish the Welcome.java.This is useful when we press the back button
                         finish();
                     }
                 }// end of the onActivityResult() function
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_welcome);
         current_user = FirebaseAuth.getInstance().getCurrentUser();
         if (current_user != null) {
             //getting the phone from the currently signed in user
@@ -59,19 +58,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     user_object = dataSnapshot.getValue(User.class);
                     if(user_object==null){
-                        Intent navigate = new Intent(MainActivity.this,GettingDetails.class);
+                        Intent navigate = new Intent(Welcome.this, SignUp.class);
                         navigate.putExtra("phone_number",phone_number);
                         launcher.launch(navigate);
                     }
                     else{
                         if(user_object.session==true || user_object.password_protected==false){
-                            Intent navigate = new Intent(MainActivity.this,login.class);
+                            Intent navigate = new Intent(Welcome.this, Login.class);
                             navigate.putExtra("user_object",user_object);
                             navigate.putExtra("phone_number",phone_number);
                             launcher.launch(navigate);
                         }
                         else if(user_object.password_protected){
-                            Intent navigate = new Intent(MainActivity.this,EnterPassword.class);
+                            Intent navigate = new Intent(Welcome.this, EnterPasswordLogin.class);
                             navigate.putExtra("user_object",user_object);
                             navigate.putExtra("phone_number",phone_number);
                             launcher.launch(navigate);
@@ -81,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     //Navigate to error page
-                    Intent navigate = new Intent(MainActivity.this,error_activity.class);
+                    Intent navigate = new Intent(Welcome.this, ErrorPage.class);
                     navigate.putExtra("error",databaseError.getMessage());
                     launcher.launch(navigate);
                 }
             });
         }
         else{
-            Intent navigate = new Intent(MainActivity.this,signup.class);
+            Intent navigate = new Intent(Welcome.this,LoginAndSignup.class);
             launcher.launch(navigate);
 
         }
@@ -97,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
 /** Important Note :
  * Even after calling the finish() function the remianing code of the currently executed function will
- * execute **/
+ * execute
+ *
+ * Data retrieval listener from firebase realtime database works in the separate thread so it should be executed last to prevent messing up the execution**/

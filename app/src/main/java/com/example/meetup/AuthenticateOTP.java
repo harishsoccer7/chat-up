@@ -1,16 +1,10 @@
 package com.example.meetup;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 //My imports
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,15 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;//This class is the entry point for
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;//class to represent options object
 import com.google.firebase.auth.PhoneAuthProvider;//class to represent the phone number authentication mechanism.
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;//class to specify the units such as SECONDS
 
-public class verifyOTP extends AppCompatActivity {
+public class AuthenticateOTP extends AppCompatActivity {
     private String phone_number,verification_id,otp_code;
     private FirebaseAuth auth_object = FirebaseAuth.getInstance();//To get an instance and perform authentication
     private PhoneAuthProvider.ForceResendingToken resend_token;
@@ -45,7 +34,7 @@ public class verifyOTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_otp);
+        setContentView(R.layout.activity_authenticate_otp);
         //Get the phone number from the intent
         phone_number = getIntent().getStringExtra("phone_number");
         //getIntent() returns the intent that started this activity
@@ -109,7 +98,7 @@ public class verifyOTP extends AppCompatActivity {
         @Override
         public void onVerificationFailed(FirebaseException e) {
             Intent temp=new Intent();
-            //set the error message in an intent and send it to previous activity where the current activity is launched ie.,signup
+            //set the error message in an intent and send it to previous activity where the current activity is launched ie.,LoginAndSignup
             temp.putExtra("error",e.getMessage());
             setResult(-123,temp);
             finish();
@@ -119,7 +108,7 @@ public class verifyOTP extends AppCompatActivity {
         public void onCodeSent(String s,PhoneAuthProvider.ForceResendingToken token){
             verification_id = s;
             resend_token = token;
-            //enable the verifyOTP button
+            //enable the AuthenticateOTP button
             verify_otp_submit.setEnabled(true);
             resend_otp.setEnabled(true);
         }

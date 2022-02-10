@@ -4,32 +4,29 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class GettingDetails extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
     private EditText user_name_widget,password_widget;
     private RadioButton password_protection_status_widget;
     private Button finish,signout_getting_details;
     private User user_object;
     private String user_name,password;
     private boolean password_protection_status,check=false;
+    private DatabaseReference user_list_ref;
     //check variable is initialized here because check status has to be noted from the starting of the activity.If i declare it inside the onclick function then when  each time radio button is clicked ,check is initialized newly ie.,starting value
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -50,7 +47,7 @@ public class GettingDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_getting_details);
+        setContentView(R.layout.activity_signup);
         Toast.makeText(getApplicationContext(),"Signed in successfully",Toast.LENGTH_LONG).show();
         password_protection_status_widget = findViewById(R.id.password_protection_status);
         password_protection_status_widget.setOnClickListener(new View.OnClickListener(){
@@ -72,7 +69,7 @@ public class GettingDetails extends AppCompatActivity {
            @Override
            public void onClick(View v){
                FirebaseAuth.getInstance().signOut();//signOut the user
-               //set the result and finish the current GettingDetails activity
+               //set the result and finish the current SignUp activity
                setResult(123);
                finish();
            }
@@ -110,8 +107,11 @@ public class GettingDetails extends AppCompatActivity {
                             .getReference("USERS")
                             .child(phone_number)
                             .setValue(user_object);//Sets the value on the database reference
-                    //navigate to login page after storing the user data
-                    Intent navigate = new Intent(GettingDetails.this,login.class);
+                    //Next step : store phone number in separate index(i.e.,users_list) for faster retrieval
+                    FirebaseDatabase.getInstance().getReference("users_list").child( phone_number.replaceAll("\\+91","") ).setValue(user_object.user_name);
+
+                    //navigate to Login page after storing the user data
+                    Intent navigate = new Intent(SignUp.this, Login.class);
                     navigate.putExtra("user_object",user_object);
                     navigate.putExtra("phone_number",phone_number);
                     launcher.launch(navigate);

@@ -18,10 +18,8 @@ import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
 
-import com.google.firebase.auth.FirebaseAuth;
 
-
-public class signup extends AppCompatActivity {
+public class LoginAndSignup extends AppCompatActivity {
 
     private EditText phone_widget;
     private Button button_widget;
@@ -35,13 +33,12 @@ public class signup extends AppCompatActivity {
                   Toast.makeText(getApplicationContext(),result.getData().getStringExtra("error"),Toast.LENGTH_LONG).show();
               }//Code to run if any error occurs in the launched activity
               else if(result.getResultCode()==321){
-                  Log.i("signup","back to signup");
-              }//Nothing happen when pressing signup button
+                  Log.i("LoginAndSignup","back to LoginAndSignup");
+              }//Nothing happen when pressing LoginAndSignup button
               else if(result.getResultCode()== Activity.RESULT_CANCELED){
                   finish();
               }//Code to run when pressing back button
               else if(result.getResultCode()==123){
-                  Log.i("signup in","result code123");
                   setResult(123);
                   finish();
               }//Code to run when OTP verification is successful
@@ -52,7 +49,7 @@ public class signup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_login_and_signup);
 
         //My code
         //Initializing variables for widgets
@@ -73,7 +70,7 @@ public class signup extends AppCompatActivity {
                 }
                 else{
                     phone_number = "+91" + phone_number;
-                    Intent navigate = new Intent(signup.this,verifyOTP.class);
+                    Intent navigate = new Intent(LoginAndSignup.this, AuthenticateOTP.class);
                     navigate.putExtra("phone_number",phone_number);
                     launcher.launch(navigate);
                 }
